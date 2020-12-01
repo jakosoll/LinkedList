@@ -3,15 +3,9 @@ from linked_list import LinkedList
 from linked_list import Node
 
 
-class LinkedListTest(unittest.TestCase):
+class LinkedListBaseTest(unittest.TestCase):
     def setUp(self) -> None:
         self.list_ = LinkedList()
-        self.first = 'First'
-        self.second = 'Second'
-        self.third = 'Third'
-        self.fourth = 'Fourth'
-
-        self.list_.insert(self.first)
 
     def test_create_linked_list(self):
         self.assertIsInstance(self.list_, LinkedList)
@@ -25,11 +19,25 @@ class LinkedListTest(unittest.TestCase):
     def test_has_insert_method(self):
         self.assertTrue(hasattr(self.list_, 'insert'))
 
-    def test_insert_save_first_in_head(self):
-        self.assertEqual(str(self.list_.head), "First")
-
     def test_head_is_node_instance(self):
         self.assertIsInstance(self.list_.head, Node)
+
+
+class LinkedListInsertTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.list_ = LinkedList()
+        self.first = 'First'
+        self.second = 'Second'
+        self.third = 'Third'
+        self.fourth = 'Fourth'
+
+        self.list_.insert(self.first)
+
+    def test_insert_save_first_in_head(self):
+        """
+        Test: insert saves value in head of list
+        """
+        self.assertEqual(str(self.list_.head), "First")
 
     def test_correct_insert_two_elem_in_list(self):
         """
@@ -43,17 +51,19 @@ class LinkedListTest(unittest.TestCase):
 
     def test_elements_in_list(self):
         """
-        Test: we can check 'elem' in list
+        Test: check 'elements' in list
         """
         self.list_.insert(self.second)
         self.assertIn(self.first, self.list_)
         self.assertIn(self.second, self.list_)
 
     def test_elem_not_in_list(self):
+        """
+        Test: element not in list
+        """
         self.list_.insert(self.second)
         self.assertNotIn(self.third, self.list_)
 
 
 if __name__ == "__main__":
     unittest.main()
-
