@@ -21,3 +21,12 @@ class LinkedList:
             self.head = new_node
         else:
             self.head = Node(value)
+
+    def __contains__(self, item):
+        node = self.head
+        while node:
+            if node.value == item:
+                return True
+            node = node.next_node
+        return False
+
