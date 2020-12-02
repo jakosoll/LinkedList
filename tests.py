@@ -6,6 +6,12 @@ from linked_list import Node
 class LinkedListBaseTest(unittest.TestCase):
     def setUp(self) -> None:
         self.list_ = LinkedList()
+        self.first = 'First'
+        self.second = 'Second'
+        self.third = 'Third'
+        self.fourth = 'Fourth'
+
+        self.list_.insert(self.first)
 
     def test_create_linked_list(self):
         self.assertIsInstance(self.list_, LinkedList)
@@ -16,11 +22,20 @@ class LinkedListBaseTest(unittest.TestCase):
     def test_next_in_linked_list(self):
         self.assertTrue(hasattr(self.list_, 'length'))
 
+    def test_length_list_with_two_elements(self):
+        """Test: len() for Linked List"""
+        self.list_.insert(self.second)
+        self.assertEqual(len(self.list_), 2)
+
+    def test_length_list_with_more_elements(self):
+        self.list_.insert(self.second)
+        self.list_.insert(self.third)
+        self.assertEqual(len(self.list_), 3)
+        self.list_.insert(self.fourth)
+        self.assertEqual(len(self.list_), 4)
+
     def test_has_insert_method(self):
         self.assertTrue(hasattr(self.list_, 'insert'))
-
-    def test_head_is_node_instance(self):
-        self.assertIsInstance(self.list_.head, Node)
 
 
 class LinkedListInsertTest(unittest.TestCase):
@@ -33,11 +48,18 @@ class LinkedListInsertTest(unittest.TestCase):
 
         self.list_.insert(self.first)
 
+    def test_insert_not_raises_with_zero_value(self):
+        self.list_.insert(0)
+        self.assertEqual(self.list_.head, 0)
+
     def test_insert_save_first_in_head(self):
         """
         Test: insert saves value in head of list
         """
         self.assertEqual(str(self.list_.head), "First")
+
+    def test_head_is_node_instance(self):
+        self.assertIsInstance(self.list_.head, Node)
 
     def test_correct_insert_two_elem_in_list(self):
         """

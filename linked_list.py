@@ -21,6 +21,7 @@ class LinkedList:
             self.head = new_node
         else:
             self.head = Node(value)
+        self.length += 1
 
     def __contains__(self, item):
         node = self.head
@@ -29,4 +30,7 @@ class LinkedList:
                 return True
             node = node.next_node
         return False
+
+    def __len__(self):
+        return self.length
 
