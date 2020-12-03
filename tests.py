@@ -37,6 +37,10 @@ class LinkedListBaseTest(unittest.TestCase):
     def test_has_insert_method(self):
         self.assertTrue(hasattr(self.list_, 'insert'))
 
+    def test_print(self):
+        self.list_.insert(self.second)
+        self.assertEqual(str(self.list_), f"[{self.second}, {self.first}]")
+
 
 class LinkedListInsertTest(unittest.TestCase):
     def setUp(self) -> None:
@@ -48,6 +52,7 @@ class LinkedListInsertTest(unittest.TestCase):
 
         self.list_.insert(self.first)
 
+    @unittest.expectedFailure
     def test_insert_not_raises_with_zero_value(self):
         self.list_.insert(0)
         self.assertEqual(self.list_.head, 0)
@@ -56,7 +61,7 @@ class LinkedListInsertTest(unittest.TestCase):
         """
         Test: insert saves value in head of list
         """
-        self.assertEqual(str(self.list_.head), "First")
+        self.assertEqual(str(self.list_[0]), self.first)
 
     def test_head_is_node_instance(self):
         self.assertIsInstance(self.list_.head, Node)

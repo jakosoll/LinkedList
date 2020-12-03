@@ -6,7 +6,7 @@ class Node:
         self.value = value
         self.next_node = next_node
 
-    def __repr__(self) -> None:
+    def __repr__(self):
         return self.value
 
 
@@ -34,3 +34,23 @@ class LinkedList:
     def __len__(self):
         return self.length
 
+    def __str__(self):
+        node = self.head
+        result = ""
+        while node:
+            result += str(node.value) + ", "
+            node = node.next_node
+
+        result = result.strip(", ")
+        return "[" + result + "]"
+
+    def __getitem__(self, item):
+        if item > len(self) - 1 or item < len(self) - 1:
+            raise IndexError(f"Index error, {item} not in LinkedList")
+        node = self.head
+        counter = 0
+        while node:
+            if item == counter:
+                return node
+            counter += 1
+            node = node.next_node
