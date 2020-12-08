@@ -5,6 +5,7 @@ class Node:
     def __init__(self, value, next_node: Node = None):
         self.value = value
         self.next_node = next_node
+        # TODO: Implement self.prev_node for correct .pop() by index
 
     def __repr__(self):
         return self.value
@@ -13,6 +14,7 @@ class Node:
 class LinkedList:
     def __init__(self):
         self.head = None
+        self.tail = None
         self.length = 0
 
     def insert(self, value) -> None:
@@ -21,7 +23,17 @@ class LinkedList:
             self.head = new_node
         else:
             self.head = Node(value)
+            self.tail = self.head
         self.length += 1
+
+    def append(self, value) -> None:
+        if self.tail:
+            new_node = Node(value)
+            self.tail.next_node = new_node
+            self.tail = new_node
+            self.length += 1
+        else:
+            self.head, self.tail = Node(value)
 
     def __contains__(self, item) -> bool:
         node = self.head
@@ -71,6 +83,7 @@ class LinkedList:
         while node:
             if counter == index:
                 prev_node.next_node = node.next_node
+                self.length -= 1
                 return node.value
             counter += 1
             prev_node = node

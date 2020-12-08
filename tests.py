@@ -52,10 +52,11 @@ class InsertTests(unittest.TestCase):
 
         self.list_.insert(self.first)
 
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_insert_not_raises_with_zero_value(self):
         self.list_.insert(0)
-        self.assertEqual(self.list_.head, 0)
+        value = self.list_.pop(0)
+        self.assertEqual(value, 0)
 
     def test_insert_save_first_in_head(self):
         """
@@ -108,17 +109,47 @@ class RemoveTests(unittest.TestCase):
     def test_pop_remove_last_element(self):
         """Test: .pop without index return and remove last element"""
         self.list_.insert(self.first)
-        self.list_.insert(self.second)  # insert element in head
+        self.list_.append(self.second)  # insert element in end
         self.list_.pop()
-        self.assertEqual(str(self.list_), f'[{self.second}]')
+        self.assertEqual(str(self.list_), f'[{self.first}]')
 
-    def test_pop_remove_by_zero_index(self):
+    def test_pop_remove_first_element_by_zero_index(self):
         """Test: .pop with index return and remove element by index"""
+        self.list_.insert(self.third)
+        self.list_.insert(self.second)
+        self.list_.insert(self.first)  # 0
+        first = self.list_.pop(0)
+        self.assertNotIn(self.first, self.list_)
+        self.assertEqual(self.first, first)
+
+    def test_length_after_pop_value(self):
         self.list_.insert(self.second)
         self.list_.insert(self.third)
-        self.list_.insert(self.first)  # 0
         self.list_.pop(0)
-        self.assertNotIn(self.second, self.list_)
+        self.assertEqual(1, len(self.list_))
+
+
+class TestAppend(unittest.TestCase):
+    def setUp(self) -> None:
+        self.list_ = LinkedList()
+        self.first = 'First'
+        self.second = 'Second'
+        self.third = 'Third'
+        self.fourth = 'Fourth'
+
+    def test_append_add_element_at_end_of_list(self):
+        """Test: .append adds element at end of list"""
+        self.list_.insert(self.first)
+        self.list_.append(self.second)
+        self.assertIn(self.second, self.list_)
+        self.assertEqual(str(self.list_), f'[{self.first}, {self.second}]')
+
+    def test_length_after_append_element(self):
+        """Test: length of list change after append element"""
+        self.list_.insert(self.first)
+        self.assertEqual(len(self.list_), 1)
+        self.list_.append(self.second)
+        self.assertEqual(len(self.list_), 2)
 
 
 if __name__ == "__main__":
