@@ -23,7 +23,7 @@ class LinkedList:
             self.head = Node(value)
         self.length += 1
 
-    def __contains__(self, item):
+    def __contains__(self, item) -> bool:
         node = self.head
         while node:
             if node.value == item:
@@ -31,10 +31,10 @@ class LinkedList:
             node = node.next_node
         return False
 
-    def __len__(self):
+    def __len__(self) -> int:
         return self.length
 
-    def __str__(self):
+    def __str__(self) -> str:
         node = self.head
         result = ""
         while node:
@@ -55,14 +55,24 @@ class LinkedList:
             counter += 1
             node = node.next_node
 
-    def pop(self):
+    def pop(self, index: int = None):
+        """
+        The method removes object from Linked List. If it have used without index,
+        the method removes item from end and returns value.
+        O(n)
+        """
+        if not index:
+            index = len(self) - 1
         if not self.head:
             raise IndexError("Linked List is empty")
         node = self.head
-        while node.next_node:
-            if node.next_node.next_node:
-                node = node.next_node
-            else:
-                result = node.next_node
-                node.next_node = None
-                return result.value
+        prev_node = node
+        counter = 0
+        while node:
+            if counter == index:
+                prev_node.next_node = node.next_node
+                return node.value
+            counter += 1
+            prev_node = node
+            node = node.next_node
+        raise IndexError("Index out of range")

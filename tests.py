@@ -112,6 +112,14 @@ class RemoveTests(unittest.TestCase):
         self.list_.pop()
         self.assertEqual(str(self.list_), f'[{self.second}]')
 
+    def test_pop_remove_by_zero_index(self):
+        """Test: .pop with index return and remove element by index"""
+        self.list_.insert(self.second)
+        self.list_.insert(self.third)
+        self.list_.insert(self.first)  # 0
+        self.list_.pop(0)
+        self.assertNotIn(self.second, self.list_)
+
 
 if __name__ == "__main__":
     unittest.main()
