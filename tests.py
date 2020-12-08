@@ -3,7 +3,7 @@ from linked_list import LinkedList
 from linked_list import Node
 
 
-class LinkedListBaseTest(unittest.TestCase):
+class BaseTests(unittest.TestCase):
     def setUp(self) -> None:
         self.list_ = LinkedList()
         self.first = 'First'
@@ -42,7 +42,7 @@ class LinkedListBaseTest(unittest.TestCase):
         self.assertEqual(str(self.list_), f"[{self.second}, {self.first}]")
 
 
-class LinkedListInsertTest(unittest.TestCase):
+class InsertTests(unittest.TestCase):
     def setUp(self) -> None:
         self.list_ = LinkedList()
         self.first = 'First'
@@ -90,6 +90,27 @@ class LinkedListInsertTest(unittest.TestCase):
         """
         self.list_.insert(self.second)
         self.assertNotIn(self.third, self.list_)
+
+
+class RemoveTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.list_ = LinkedList()
+        self.first = 'First'
+        self.second = 'Second'
+        self.third = 'Third'
+        self.fourth = 'Fourth'
+
+    def test_raise_exception_if_list_empty(self):
+        """Test: if list is empty, exception was raising"""
+        with self.assertRaises(IndexError):
+            self.list_.pop()
+
+    def test_pop_remove_last_element(self):
+        """Test: .pop without index return and remove last element"""
+        self.list_.insert(self.first)
+        self.list_.insert(self.second)  # insert element in head
+        self.list_.pop()
+        self.assertEqual(str(self.list_), f'[{self.second}]')
 
 
 if __name__ == "__main__":

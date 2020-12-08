@@ -54,3 +54,15 @@ class LinkedList:
                 return node
             counter += 1
             node = node.next_node
+
+    def pop(self):
+        if not self.head:
+            raise IndexError("Linked List is empty")
+        node = self.head
+        while node.next_node:
+            if node.next_node.next_node:
+                node = node.next_node
+            else:
+                result = node.next_node
+                node.next_node = None
+                return result.value
