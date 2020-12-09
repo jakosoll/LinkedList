@@ -2,9 +2,10 @@ from __future__ import annotations
 
 
 class Node:
-    def __init__(self, value, next_node: Node = None):
+    def __init__(self, value, prev_node: Node = None, next_node: Node = None):
         self.value = value
         self.next_node = next_node
+        self.prev_node = prev_node
         # TODO: Implement self.prev_node for correct .pop() by index
 
     def __repr__(self):
@@ -19,11 +20,11 @@ class LinkedList:
 
     def insert(self, value) -> None:
         if self.head:
-            new_node = Node(value, self.head)
+            new_node = Node(value, next_node=self.head)
+            self.head.prev_node = new_node
             self.head = new_node
         else:
-            self.head = Node(value)
-            self.tail = self.head
+            self.head = self.tail = Node(value)
         self.length += 1
 
     def append(self, value) -> None:
@@ -31,9 +32,9 @@ class LinkedList:
             new_node = Node(value)
             self.tail.next_node = new_node
             self.tail = new_node
-            self.length += 1
         else:
-            self.head, self.tail = Node(value)
+            self.head = self.tail = Node(value)
+        self.length += 1
 
     def __contains__(self, item) -> bool:
         node = self.head

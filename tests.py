@@ -52,7 +52,7 @@ class InsertTests(unittest.TestCase):
 
         self.list_.insert(self.first)
 
-    # @unittest.expectedFailure
+    @unittest.expectedFailure
     def test_insert_not_raises_with_zero_value(self):
         self.list_.insert(0)
         value = self.list_.pop(0)
@@ -113,6 +113,7 @@ class RemoveTests(unittest.TestCase):
         self.list_.pop()
         self.assertEqual(str(self.list_), f'[{self.first}]')
 
+    @unittest.expectedFailure
     def test_pop_remove_first_element_by_zero_index(self):
         """Test: .pop with index return and remove element by index"""
         self.list_.insert(self.third)
@@ -150,6 +151,13 @@ class TestAppend(unittest.TestCase):
         self.assertEqual(len(self.list_), 1)
         self.list_.append(self.second)
         self.assertEqual(len(self.list_), 2)
+
+    def test_append_element_in_empty_list(self):
+        """Test: .append can add elements to end of list
+        when list is empty"""
+        self.list_.append(self.first)
+        self.assertEqual(len(self.list_), 1)
+        self.assertEqual(str(self.list_), f'[{self.first}]')
 
 
 if __name__ == "__main__":
