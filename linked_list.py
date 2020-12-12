@@ -29,7 +29,7 @@ class LinkedList:
 
     def append(self, value) -> None:
         if self.tail:
-            new_node = Node(value)
+            new_node = Node(value, prev_node=self.tail)
             self.tail.next_node = new_node
             self.tail = new_node
         else:
@@ -74,16 +74,27 @@ class LinkedList:
         the method removes item from end and returns value.
         O(n)
         """
-        if not index:
-            index = len(self) - 1
         if not self.head:
             raise IndexError("Linked List is empty")
         node = self.head
+        if index is None:
+            node = self.tail
+            self.tail = node.prev_node
+            self.tail.next_node = None
+            return node.value
+        if index == 0:
+            self.head = node.next_node
+            self.head.prev_node = None
+            self.length -= 1
+            return node.value
         prev_node = node
         counter = 0
         while node:
             if counter == index:
-                prev_node.next_node = node.next_node
+                if node.prev_node:
+                    next_node = node.next_node
+                    prev_node.next_node = next_node
+                    next_node.prev_node = prev_node
                 self.length -= 1
                 return node.value
             counter += 1

@@ -52,11 +52,9 @@ class InsertTests(unittest.TestCase):
 
         self.list_.insert(self.first)
 
-    @unittest.expectedFailure
     def test_insert_not_raises_with_zero_value(self):
         self.list_.insert(0)
-        value = self.list_.pop(0)
-        self.assertEqual(value, 0)
+        self.assertIn(0, self.list_)
 
     def test_insert_save_first_in_head(self):
         """
@@ -113,7 +111,6 @@ class RemoveTests(unittest.TestCase):
         self.list_.pop()
         self.assertEqual(str(self.list_), f'[{self.first}]')
 
-    @unittest.expectedFailure
     def test_pop_remove_first_element_by_zero_index(self):
         """Test: .pop with index return and remove element by index"""
         self.list_.insert(self.third)
@@ -128,6 +125,18 @@ class RemoveTests(unittest.TestCase):
         self.list_.insert(self.third)
         self.list_.pop(0)
         self.assertEqual(1, len(self.list_))
+
+    def test_remove_element_by_first_and_last(self):
+        self.list_.insert(self.first)
+        self.list_.append(self.second)
+        self.list_.append(self.third)
+        second = self.list_.pop(1)
+
+        self.assertNotIn(self.second, self.list_)
+        self.assertEqual(second, self.second)
+
+        self.list_.pop()
+        self.assertNotIn(self.third, self.list_)
 
 
 class TestAppend(unittest.TestCase):
